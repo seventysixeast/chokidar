@@ -1,0 +1,43 @@
+.custom-btn1 {
+    padding: 0 !important;
+    width: 34px;
+    height: 34px;
+    background-color: #72d400 !important;
+    color: #101214 !important;
+}
+
+.theme-switch-button {
+    padding: 0 !important;
+    width: 34px;
+    height: 34px;
+    background-color: #232527 !important;
+    color: #72d400 !important;
+    float: right;
+}
+
+.logo {
+    width: 100%;
+}
+
+.logo-name {
+    color: #72d400;
+    margin: 0px 0px 0px 5px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.sidebar-container {
+    width: 100%;
+    padding: 22px 12px 6px 8px;
+}
+
+.listing {
+    color: #ffffff !important;
+    border-radius: 20px;
+}
+
+.listing:hover {
+    background-color: #72d400;
+    border-radius: 20px;
+    color: #101214 !important;
+}

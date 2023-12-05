@@ -1,0 +1,23 @@
+.containers {
+    display: flex;
+    align-items: stretch;
+    padding: 10px;
+    height: 100%;
+    color: #ffffff;
+    align-content: space-around;
+    background-color: #101214;
+}
+
+.LHS-body {
+    display: flex;
+    width: 250px;
+}
+
+.RHS-body {
+    display: flex;
+    flex-grow: 1;
+    background-color: #ffffff;
+    border-radius: 30px;
+    color: #101214;
+    padding: 20px;
+}
