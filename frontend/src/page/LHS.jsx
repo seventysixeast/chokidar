@@ -20,7 +20,7 @@ const LHS = ({
                 <button 
                     className="btn theme-switch-button"
                     onClick={()=> {
-                        sendLocation("E:\\RProject\\explorer\\server", "oneTime");
+                        sendLocation("E:\\RProject", "oneTime");
                         setFolderName("Server")
                     }}
                 >
