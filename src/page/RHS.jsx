@@ -1,6 +1,7 @@
 import React from "react";
 import {Breadcrumb} from "react-bootstrap"
-
+import { FaRegFileLines } from "react-icons/fa6";
+import { Fa500Px, FaRegMoon, FaFolder, FaFolderOpen } from "react-icons/fa";
 const RHS = () => {
     return(
         <div className="main-container">
@@ -13,21 +14,35 @@ const RHS = () => {
                 <Breadcrumb.Item active>Data</Breadcrumb.Item>
             </Breadcrumb>
             <div className="file-body">
+
                 <div style={{
-                    backgroundColor: "red",
-                    width: "100px",
-                    height: "100px"
-                }}>red</div>
+                        textAlign: "center",
+                        margin:"0 12px"
+                    }}> <span style={{
+                        fontSize: "40px",
+                        color: "#72d400",
+                    }}><FaFolder /></span> ( 6 )
+                    <br />
+                    <span style={{
+                        fontSize: "14px",
+                        fontWeight: "600"
+                    }}>Folder Name</span>
+                </div>
+
                 <div style={{
-                    backgroundColor: "red",
-                    width: "100px",
-                    height: "100px"
-                }}>red</div>
-                <div style={{
-                    backgroundColor: "red",
-                    width: "100px",
-                    height: "100px"
-                }}>red</div>
+                        textAlign: "center",
+                        margin:"0 12px"
+                    }}> <span style={{
+                        fontSize: "40px",
+                        color: "#72d400",
+                    }}><FaRegFileLines /></span> 
+                    ( 6 )
+                    <br />
+                    <span style={{
+                        fontSize: "14px",
+                        fontWeight: "600"
+                    }}>FileName.txt</span></div>
+                
             </div>
         </div>
     )
