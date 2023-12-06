@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {Nav} from "react-bootstrap"
 import { Fa500Px, FaRegMoon, FaFolder, FaFolderOpen } from "react-icons/fa";
+import { SiWpexplorer } from "react-icons/si";
+const LHS = ({
+    path,
+    data = [],
+    sendLocation
+}) => {
 
-const LHS = () => {
+    const [mainFolderNmae, setFolderName] = useState("");
 
     return(
         <div className="sidebar-container">
@@ -11,23 +17,50 @@ const LHS = () => {
                     <Fa500Px />
                 </button>
                 <span className="logo-name">Chokidar</span>
-                {/* <button className="btn theme-switch-button">
-                    <FaRegMoon />
-                </button> */}
+                <button 
+                    className="btn theme-switch-button"
+                    onClick={()=> {
+                        sendLocation("E:\\RProject\\explorer\\server", "oneTime");
+                        setFolderName("Server")
+                    }}
+                >
+                    <SiWpexplorer />
+                </button>
             </div>
+
+            {/* <input type="file" id="folder" webkitdirectory multiple/> */}
+
+            {
+                console.log(data)
+            }
+
+            {
+                Object.keys(data).length ?
+                <>
 
             <div style={{
                 marginTop: "20px",
                 marginBottom: "6px"
             }}>
-                <FaFolderOpen /> Main file name
+                <FaFolderOpen /> {mainFolderNmae}
             </div>
 
             <Nav defaultActiveKey="/home" className="flex-column">
-                <Nav.Link className="listing" eventKey="link-0"> <FaFolder /> Active</Nav.Link>
-                <Nav.Link className="listing" eventKey="link-1"> <FaFolder /> Link</Nav.Link>
-                <Nav.Link className="listing" eventKey="link-2"> <FaFolder /> Link</Nav.Link>
+                {
+                    data.map((d) => {
+                        if(d.type == "directory"){
+                            return <Nav.Link 
+                            className="listing" 
+                            eventKey="link-0"
+                            > <FaFolder /> {d.name}</Nav.Link>
+                        }
+                    })
+                }
+                
             </Nav>
+
+                </>:""
+            }
 
         </ div>
     )

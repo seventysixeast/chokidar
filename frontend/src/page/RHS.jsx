@@ -2,7 +2,11 @@ import React from "react";
 import {Breadcrumb} from "react-bootstrap"
 import { FaRegFileLines } from "react-icons/fa6";
 import { Fa500Px, FaRegMoon, FaFolder, FaFolderOpen } from "react-icons/fa";
-const RHS = () => {
+const RHS = ({
+    path,
+    data = [],
+    sendLocation
+}) => {
     return(
         <div className="main-container">
             <h1>File Name</h1>
@@ -15,33 +19,48 @@ const RHS = () => {
             </Breadcrumb>
             <div className="file-body">
 
-                <div style={{
-                        textAlign: "center",
-                        margin:"0 12px"
-                    }}> <span style={{
-                        fontSize: "40px",
-                        color: "#72d400",
-                    }}><FaFolder /></span> ( 6 )
-                    <br />
-                    <span style={{
-                        fontSize: "14px",
-                        fontWeight: "600"
-                    }}>Folder Name</span>
-                </div>
+                {
+                    data.map(d=> {
+                        if(d.type == "file"){
+                            return <div style={{
+                                textAlign: "center",
+                                margin:"0 12px",
+                                width: "60px",
+                                wordBreak: "break-word"
+                            }}> <span style={{
+                                fontSize: "40px",
+                                color: "#72d400",
+                            }}><FaRegFileLines /></span>
+                            <br />
+                            <span style={{
+                                fontSize: "14px",
+                                fontWeight: "600"
+                            }}>{d.name}</span>
+                        </div>
+                        } else {
+                            return <div style={{
+                                textAlign: "center",
+                                margin:"0 12px",
+                                width: "60px",
+                                wordBreak: "break-word"
+                            }}> <span style={{
+                                fontSize: "40px",
+                                color: "#72d400",
+                            }}><FaFolder /></span> 
+                            ({d.count})
+                            <br />
+                            <span style={{
+                                fontSize: "14px",
+                                fontWeight: "600"
+                            }}>{d.name}</span>
+                        </div>
+                        }
+                    })
+                }
 
-                <div style={{
-                        textAlign: "center",
-                        margin:"0 12px"
-                    }}> <span style={{
-                        fontSize: "40px",
-                        color: "#72d400",
-                    }}><FaRegFileLines /></span> 
-                    ( 6 )
-                    <br />
-                    <span style={{
-                        fontSize: "14px",
-                        fontWeight: "600"
-                    }}>FileName.txt</span></div>
+
+
+                
                 
             </div>
         </div>
