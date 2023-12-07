@@ -29,7 +29,9 @@ const LHS = ({
                     className="btn theme-switch-button"
                     onClick={()=> {
                         sendLocation("E:\\RProject", "oneTime");
-                        setFolderName("Server")
+                        let a = "E:\\RProject".split("\\")
+                        a = a[a.length-1]
+                        setFolderName(a)
                     }}
                 >
                     <SiWpexplorer />
