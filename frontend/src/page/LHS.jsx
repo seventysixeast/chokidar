@@ -5,10 +5,18 @@ import { SiWpexplorer } from "react-icons/si";
 const LHS = ({
     path,
     data = [],
-    sendLocation
+    sendLocation,
+    selected, 
+    setSelected
 }) => {
 
+
     const [mainFolderNmae, setFolderName] = useState("");
+
+    const changeDirectory = (name) => {
+        setSelected(name)
+        sendLocation(path+`\\`+name)
+    }
 
     return(
         <div className="sidebar-container">
@@ -16,7 +24,7 @@ const LHS = ({
                 <button className="btn custom-btn1">
                     <Fa500Px />
                 </button>
-                <span className="logo-name">Chokidar</span>
+                <span className="logo-name">MonitorFolder</span>
                 <button 
                     className="btn theme-switch-button"
                     onClick={()=> {
@@ -35,13 +43,14 @@ const LHS = ({
                         <FaFolderOpen /> {mainFolderNmae}
                     </div>
 
-                    <Nav defaultActiveKey="/home" className="flex-column">
+                    <Nav className="flex-column">
                         {
                             data.map((d) => {
                                 if(d.type == "directory"){
                                     return <Nav.Link 
-                                    className="listing" 
+                                    className={selected == d.name?"listing-active":"listing"} 
                                     eventKey="link-0"
+                                    onClick={()=> changeDirectory(d.name)}
                                     > <FaFolder /> {d.name}</Nav.Link>
                                 }
                             })

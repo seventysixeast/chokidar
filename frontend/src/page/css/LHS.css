@@ -28,7 +28,7 @@
 
 .sidebar-container {
     display: grid;
-    width: 100%;
+    min-width: 250px;
     padding: 22px 12px 6px 8px;
 }
 
@@ -52,7 +52,7 @@
 }
 
 .listing-active {
-    background-color: #72d400;
+    background-color: #72d400 !important;
     border-top: solid 1px gray !important;
     color: #101214 !important;
 }
