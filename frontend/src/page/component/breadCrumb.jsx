@@ -1,10 +1,11 @@
 import React from "react";
 
-const Breadcrumb = ({bread = [], sendLocation}) => {
+const Breadcrumb = ({bread = [], sendLocation, setViewerOn}) => {
 
     const findUrl = async (i) => {
         let create = bread.slice(0, i+1).join("\\");
-        sendLocation(create)
+        sendLocation(create);
+        setViewerOn(false)
     }
 
     return (
