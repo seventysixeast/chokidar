@@ -27,17 +27,32 @@
 }
 
 .sidebar-container {
+    display: grid;
     width: 100%;
     padding: 22px 12px 6px 8px;
 }
 
+.main-folder {
+    margin-top: 20px;
+    margin-bottom: 1px;
+    border-left: solid 4px #72d400;
+    padding-left: 6px;
+}
+
 .listing {
     color: #ffffff !important;
-    border-radius: 20px;
+    border-top: solid 1px gray !important;
+    /* border-radius: 20px; */
 }
 
 .listing:hover {
     background-color: #72d400;
-    border-radius: 20px;
+    border-top: solid 1px gray !important;
+    color: #101214 !important;
+}
+
+.listing-active {
+    background-color: #72d400;
+    border-top: solid 1px gray !important;
     color: #101214 !important;
 }

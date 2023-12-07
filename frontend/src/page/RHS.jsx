@@ -9,13 +9,13 @@ const RHS = ({
 }) => {
     return(
         <div className="main-container">
-            <h1>File Name</h1>
+            <h1>Server</h1>
             <Breadcrumb>
-                <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
-                <Breadcrumb.Item href="https://getbootstrap.com/docs/4.0/components/breadcrumb/">
+                <Breadcrumb.Item href="#">E:</Breadcrumb.Item>
+                {/* <Breadcrumb.Item href="https://getbootstrap.com/docs/4.0/components/breadcrumb/">
                     Library
-                </Breadcrumb.Item>
-                <Breadcrumb.Item active>Data</Breadcrumb.Item>
+                </Breadcrumb.Item> */}
+                <Breadcrumb.Item active>server</Breadcrumb.Item>
             </Breadcrumb>
             <div className="file-body">
 

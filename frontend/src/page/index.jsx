@@ -23,17 +23,14 @@ const MainPage = () => {
             "http://localhost:4040/get-location",
             {url: path}
         );
-        console.log(res.data)
         if(res.data.success){
             if(type == "oneTime"){
-                
                 setBasePath(path)
                 setData(res.data.directoryInfo);
                 setKeepUpdating(res.data.directoryInfo)
             } else {
                 setKeepUpdating(res.data.directoryInfo)
             }
-            
         }
     }
 

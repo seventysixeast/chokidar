@@ -27,39 +27,28 @@ const LHS = ({
                     <SiWpexplorer />
                 </button>
             </div>
-
-            {/* <input type="file" id="folder" webkitdirectory multiple/> */}
-
-            {
-                console.log(data)
-            }
-
             {
                 Object.keys(data).length ?
-                <>
+                <div style={{overflowY: "auto", height: "100%"}}>
 
-            <div style={{
-                marginTop: "20px",
-                marginBottom: "6px"
-            }}>
-                <FaFolderOpen /> {mainFolderNmae}
-            </div>
+                    <div className="main-folder">
+                        <FaFolderOpen /> {mainFolderNmae}
+                    </div>
 
-            <Nav defaultActiveKey="/home" className="flex-column">
-                {
-                    data.map((d) => {
-                        if(d.type == "directory"){
-                            return <Nav.Link 
-                            className="listing" 
-                            eventKey="link-0"
-                            > <FaFolder /> {d.name}</Nav.Link>
+                    <Nav defaultActiveKey="/home" className="flex-column">
+                        {
+                            data.map((d) => {
+                                if(d.type == "directory"){
+                                    return <Nav.Link 
+                                    className="listing" 
+                                    eventKey="link-0"
+                                    > <FaFolder /> {d.name}</Nav.Link>
+                                }
+                            })
                         }
-                    })
-                }
-                
-            </Nav>
+                    </Nav>
 
-                </>:""
+                </div>:""
             }
 
         </ div>
