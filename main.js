@@ -8,9 +8,10 @@ const http = require("http");
 const socketIO = require('socket.io');
 const bodyParser = require('body-parser');
 const cors = require("cors");
-
+global.selectedDirectory = {};
 let mainWindow;
-let  selectedDirectory = process.cwd(); // Variable to store the selected directory
+// let  selectedDirectory = process.cwd(); // Variable to store the selected directory
+selectedDirectory = {uri: 'E:\\v'} // Variable to store the selected directory
 
 
 const backendApp = express();
@@ -28,7 +29,7 @@ backendApp.get('/api/data', (req, res) => {
 });
 
 backendApp.get('/api/selectedDirectory', (req, res) => {
-  res.json({ selectedDirectory });
+  res.json({ selectedDirectory: selectedDirectory.url });
 });
 
 // ============================================================
@@ -36,10 +37,11 @@ backendApp.get('/api/selectedDirectory', (req, res) => {
 backendApp.post("/get-location", async (req, res) => {
   console.log(req.body)
   console.log(req.file)
-  req.body.url='F:\\New folder';
+  selectedDirectory.url = req.body.url;
+  // req.body.url='F:\\New folder';
   let obj = {}
   let i = 0
-  let splitfilepath = []
+  let splitfilepath = []  
 
   await fs.readdir(req.body.url , (err, files) => {
       if (err) {
@@ -103,7 +105,7 @@ backendApp.post("/read-file", async (req, res) => {
 // ============================================================
 
 backendApp.get('/api/directory', (req, res) => {
-  const directoryPath = 'F:\\New folder'; // Double backslashes in the path
+  const directoryPath = 'E:\\testingOnly\\src'; // Double backslashes in the path
 
   fs.readdir(directoryPath, (err, files) => {
     if (err) {
@@ -157,9 +159,18 @@ function openDirectoryDialog() {
   }).then(result => {
     // check if the user selected a directory
     if (!result.canceled && result.filePaths.length > 0) {
-      selectedDirectory = result.filePaths[0];
-      console.log('selectedDirectory',selectedDirectory);
-      io.emit('selectedDirectory', { selectedDirectory });
+      selectedDirectory.url = result.filePaths[0];
+
+      console.log(result.filePaths[0])
+
+      chokidar.watch(result.filePaths[0]).on('all', (event, path) => {
+        // console.log(path)
+        // Emit the directory change event to the frontend using Socket.io
+        io.emit('directoryChange', { event, path });
+      });
+      console.log('selectedDirectory',selectedDirectory.url);
+
+      io.emit('selectedDirectory', { selectedDirectory: selectedDirectory.url });
     }
   }).catch(err => {
     console.error(err);
@@ -172,11 +183,11 @@ app.whenReady().then(() => {
     /*chokidar.watch('./fruits').on('all', (event, path) => {
       console.log(event, path);
     });*/
-    chokidar.watch(selectedDirectory).on('all', (event, path) => {
-      console.log(event, path);
-      // Emit the directory change event to the frontend using Socket.io
-      io.emit('directoryChange', { event, path });
-    });
+    // chokidar.watch(selectedDirectory.url).on('all', (event, path) => {
+    //   console.log(path)
+    //   // Emit the directory change event to the frontend using Socket.io
+    //   io.emit('directoryChange', { event, path });
+    // });
   });
 
   createWindow();
@@ -195,8 +206,8 @@ io.on('connection', (socket) => {
   console.log('Client connected');
 
   // Send the selected directory to the newly connected client
-  if (selectedDirectory) {
-    socket.emit('selectedDirectory', { selectedDirectory });
+  if (selectedDirectory.url) {
+    socket.emit('selectedDirectory', { selectedDirectory: selectedDirectory.url });
   }
 
   socket.on('disconnect', () => {

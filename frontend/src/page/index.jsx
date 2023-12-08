@@ -16,6 +16,7 @@ const MainPage = () => {
     const [basePath, setBasePath] = useState("");
     const [updatedPath, setUpdatedPath] = useState("");
     const [selected, setSelected] = useState("");
+    const [updateViaS, setUpdateViaS] = useState(false);
     const [ViewerIsOn, setViewerOn] = useState(false);
     const [selectedDirectory, setSelectedDirectory] = useState(null);
 
@@ -27,27 +28,49 @@ const MainPage = () => {
         socket.on('selectedDirectory', ({ selectedDirectory }) => {
         console.log('Received selected directory:', selectedDirectory);
         setSelectedDirectory(selectedDirectory);
+        getLocalFileData(selectedDirectory, "oneTime")
         });
 
-        // Bleow is Event listener for 'directoryChange' event
+        // // Bleow is Event listener for 'directoryChange' event
         socket.on('directoryChange', ({ event, path }) => {
-        console.log('Directory change event:', event, path);
-        // Vishal add any code to be executed on directory change here
+            console.log('Directory change event:', event, path);    
+            setUpdateViaS(true)
+            
+            // getLocalFileData(selectedDirectory, "oneTime")
+            // Vishal add any code to be executed on directory change here
         });
-
+        setUpdateViaS(false)
         return () => {
         socket.disconnect();
         };
     },[])
+
+    useEffect(()=> {
+        console.log('basePath:', basePath);
+        console.log('basePath:', updatedPath);
+        console.log('updateViaS:', updateViaS);
+        if(basePath && updateViaS){
+            getLocalFileData(updatedPath);
+            setUpdateViaS(false)
+        }
+    },[updateViaS])
+
     // ============================
 
 
     const getLocalFileData = async (path, type = null) => {
 
+        console.log("=======", path)
+        console.log("=======", type)
+
         let res = await axios.post(
             "http://localhost:4040/get-location",
-            {url: path}
+            {
+                url: path,
+                type: type
+            }
         );
+        console.log("-------------------------", res)
         if(res.data.success){
             if(type == "oneTime"){
                 setBasePath(path)

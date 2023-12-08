@@ -27,7 +27,7 @@ const LHS = ({
                     {/* <Fa500Px /> */}M
                 </button>
                 <span className="logo-name">Monitor Folder</span>
-                <button 
+                {/* <button 
                     className="btn theme-switch-button"
                     onClick={()=> {
                         sendLocation("E:\\RProject", "oneTime");
@@ -37,7 +37,7 @@ const LHS = ({
                     }}
                 >
                     <SiWpexplorer />
-                </button>
+                </button> */}
             </div>
             {
                 Object.keys(data).length ?
