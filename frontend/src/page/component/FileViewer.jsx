@@ -28,10 +28,10 @@ const FileViewer = ({location}) => {
     return(
         <div style={{
             border: "solid 1px #cbcbcb",
-            padding: "10px"
+            padding: "10px",
         }}>
 
-            <pre>{lct}</pre>
+            <pre style={{}}>{lct}</pre>
 
         </div>
     )

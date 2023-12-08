@@ -28,6 +28,7 @@
 
 .sidebar-container {
     display: grid;
+    grid-template-rows: 48px auto;
     min-width: 250px;
     padding: 22px 12px 6px 8px;
 }

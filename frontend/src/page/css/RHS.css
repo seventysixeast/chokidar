@@ -29,3 +29,8 @@
     flex-wrap: wrap;
     overflow-y: auto;
 }
+
+.file-c {
+    align-items: center;
+    justify-content: center;
+}

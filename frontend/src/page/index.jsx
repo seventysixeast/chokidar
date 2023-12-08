@@ -15,6 +15,7 @@ const MainPage = () => {
     const [basePath, setBasePath] = useState("");
     const [updatedPath, setUpdatedPath] = useState("");
     const [selected, setSelected] = useState("");
+    const [ViewerIsOn, setViewerOn] = useState(false);
     useEffect(()=>{
 
     },[])
@@ -48,6 +49,7 @@ const MainPage = () => {
                         sendLocation={getLocalFileData} 
                         selected={selected} 
                         setSelected={setSelected}
+                        setViewerOn={setViewerOn}
                     />
                 </span>
                 <span className="RHS-body">
@@ -56,6 +58,8 @@ const MainPage = () => {
                         updatedPath={updatedPath} 
                         data={keepUpdated} 
                         sendLocation={getLocalFileData} 
+                        ViewerIsOn={ViewerIsOn}
+                        setViewerOn={setViewerOn}
                     />
                 </span>
             </div>

@@ -43,4 +43,5 @@
     border-radius: 30px;
     color: #101214;
     padding: 20px;
+    overflow-x: auto;
 }

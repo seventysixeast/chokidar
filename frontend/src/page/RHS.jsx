@@ -8,11 +8,12 @@ const RHS = ({
     path,
     data = [],
     sendLocation,
-    updatedPath
+    updatedPath,
+    ViewerIsOn, 
+    setViewerOn
 }) => {
 
     const [dPath, setDPath] = useState([])
-    const [ViewerIsOn, setViewerOn] = useState(false);
     const [fileName, setFileName] = useState("");
 
     useEffect(()=>{
@@ -72,7 +73,7 @@ const RHS = ({
                 sendLocation={sendLocation} 
                 setViewerOn={setViewerOn}
             />
-            <div className="file-body">
+            <div className={`file-body ${ViewerIsOn?"file-c":""}`}>
 
                 {
                     ViewerIsOn?

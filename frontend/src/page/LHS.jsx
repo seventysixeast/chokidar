@@ -7,7 +7,8 @@ const LHS = ({
     data = [],
     sendLocation,
     selected, 
-    setSelected
+    setSelected,
+    setViewerOn
 }) => {
 
 
@@ -16,6 +17,7 @@ const LHS = ({
     const changeDirectory = (name) => {
         setSelected(name)
         sendLocation(path+`\\`+name)
+        setViewerOn(false)
     }
 
     return(
