@@ -1,5 +1,5 @@
 // my-electron-app/main.js
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const express = require('express');
 const chokidar = require("chokidar");
 const path = require('path');
@@ -11,6 +11,8 @@ const bodyParser = require('body-parser');
 const cors = require("cors");
 
 let mainWindow;
+let selectedDirectory = null; // Variable to store the selected directory
+
 
 const backendApp = express();
 
@@ -26,6 +28,9 @@ backendApp.get('/api/data', (req, res) => {
   res.json({ message: 'Hello from backend!' });
 });
 
+backendApp.get('/api/selectedDirectory', (req, res) => {
+  res.json({ selectedDirectory });
+});
 
 // ============================================================
 
@@ -41,13 +46,13 @@ backendApp.post("/get-location", async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
         return;
       }
-  
+
       const directoryInfo = [];
-  
+
       files.forEach((file) => {
         const filePath = path.join(req.body.url, file);
         const stats = fs.statSync(filePath);
-  
+
         if (stats.isDirectory()) {
           const subdirectoryFiles = fs.readdirSync(filePath);
           directoryInfo.push({
@@ -63,7 +68,6 @@ backendApp.post("/get-location", async (req, res) => {
         }
       });
 
-      
       res.send({
         success: true,
         directoryInfo: directoryInfo,
@@ -72,7 +76,6 @@ backendApp.post("/get-location", async (req, res) => {
   });
 
   return
-  
 })
 
 backendApp.post("/read-file", async (req, res) => {
@@ -99,7 +102,7 @@ backendApp.post("/read-file", async (req, res) => {
 // ============================================================
 
 backendApp.get('/api/directory', (req, res) => {
-  const directoryPath = 'F:\New folder';
+  const directoryPath = 'F:\\New folder'; // Double backslashes in the path
 
   fs.readdir(directoryPath, (err, files) => {
     if (err) {
@@ -135,16 +138,31 @@ backendApp.get('/api/directory', (req, res) => {
 
 function createWindow() {
   mainWindow = new BrowserWindow({ width: 800, height: 600 });
-  console.log("__dirname",__dirname)
   mainWindow.loadFile(path.join(__dirname, 'frontend', 'build', 'index.html'));
   mainWindow.webContents.openDevTools();
   mainWindow.on('closed', function () {
     mainWindow = null;
   });
+
+  openDirectoryDialog();
 }
 
-
-  
+function openDirectoryDialog() {
+  dialog.showOpenDialog(mainWindow, {
+    properties: ['openDirectory'],
+    title: 'Select Directory',
+    defaultPath: app.getPath('documents'), //default starting directory
+    buttonLabel: 'Select', //button label
+  }).then(result => {
+    // check if the user selected a directory
+    if (!result.canceled && result.filePaths.length > 0) {
+      selectedDirectory = result.filePaths[0];
+      console.log('selectedDirectory',selectedDirectory)
+    }
+  }).catch(err => {
+    console.error(err);
+  });
+}
 
 app.whenReady().then(() => {
   httpServer.listen(backendPort, () => {
