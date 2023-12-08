@@ -2,8 +2,8 @@
     padding: 0 !important;
     width: 34px;
     height: 34px;
-    background-color: #72d400 !important;
-    color: #101214 !important;
+    background-color: #5277fb !important;
+    color: #ffffff !important;
 }
 
 .theme-switch-button {
@@ -20,7 +20,7 @@
 }
 
 .logo-name {
-    color: #72d400;
+    color: #5277fb;
     margin: 0px 0px 0px 5px;
     font-size: 18px;
     font-weight: 600;
@@ -31,6 +31,14 @@
     grid-template-rows: 48px auto;
     min-width: 250px;
     padding: 22px 12px 6px 8px;
+    background-color: #ffffff;
+}
+
+.main-folder {
+    margin-top: 20px;
+    margin-bottom: 1px;
+    border-left: solid 8px #5277fb;
+    padding-left: 6px;
 }
 
 .main-folder {
@@ -41,19 +49,20 @@
 }
 
 .listing {
-    color: #ffffff !important;
-    border-top: solid 1px gray !important;
+    color: #757575 !important;
+    border-top: 1px solid #ebebeb !important;
     /* border-radius: 20px; */
 }
 
 .listing:hover {
-    background-color: #72d400;
+    background-color: #5277fb;
     border-top: solid 1px gray !important;
-    color: #101214 !important;
+    color: #f4f5f7 !important;
 }
 
 .listing-active {
-    background-color: #72d400 !important;
-    border-top: solid 1px gray !important;
+    border-left: solid 4px #5277fb !important;
+    /* background-color: #72d400 !important; */
+    border-top: 1px solid #ebebeb !important;
     color: #101214 !important;
 }

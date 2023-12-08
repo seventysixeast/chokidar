@@ -61,11 +61,52 @@ const RHS = ({
         })
     }
 
+    const simplefromate = () => {
+        return data.map((d, index)=> {
+            if(d.type == "file"){
+                let a = d.name.split(".")
+                console.log("aaa", a);
+                console.log(a[a.length-1])
+                if(a[a.length-1] == "txt"){
+                    return ( 
+                        <div 
+                            key={"RHS"+index} 
+                            className="file-box-simple"
+                            onClick={()=>{
+                                setViewerOn(true)
+                                setFileName(d.name)
+                            }}
+                        > 
+                            {/* <span className="file-icon-simple"><FaRegFileLines /></span> */}
+                            <span className="file-name"> {d.name}</span>
+                        </div>
+                    )   
+                }
+            } else {
+                return (
+                    <div 
+                        key={"RHS"+index} 
+                        className="file-box-simple"
+                        onClick={()=>{
+                            sendLocation(updatedPath+"\\"+d.name)
+                        }}
+                    >
+                        {/* <span className="file-icon-simple"><FaFolder /> </span>  */}
+                        <span className="file-name">{d.name}</span>
+                        <span className="file-name"> ({d.count})</span>
+                        
+                        
+                    </div>
+                )
+            }
+        })
+    }
+
     return(
         <div className="main-container">
             
                 {
-                    dPath.length?<h1>{dPath[dPath.length-1]}</h1>:""
+                    // dPath.length?<h1>{dPath[dPath.length-1]}</h1>:""
                 }
             
             <Breadcrumb 
@@ -81,7 +122,7 @@ const RHS = ({
                             <FileViewer location={updatedPath+"\\"+fileName} />
                         </>
                     :
-                        showFolderAndFile()
+                    simplefromate()
                 }
 
             </div>

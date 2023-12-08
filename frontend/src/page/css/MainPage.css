@@ -12,36 +12,38 @@
    
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: #72d400 ; 
+    background: #5277fb ; 
     border-radius: 10px;
   }
   
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
-    background: #72d400 ; 
+    background: #5277fb ; 
   }
 
 .containers {
     display: flex;
     align-items: stretch;
-    padding: 10px;
+    /* padding: 10px; */
     height: 100%;
-    color: #ffffff;
+    color: #000000;
     align-content: space-around;
-    background-color: #101214;
+    background-color: #eeeeee;
+    gap: 8px
 }
 
 .LHS-body {
     display: flex;
     width: 250px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .RHS-body {
     display: flex;
     flex-grow: 1;
     background-color: #ffffff;
-    border-radius: 30px;
+    /* border-radius: 30px; */
     color: #101214;
-    padding: 20px;
+    padding: 32px;
     overflow-x: auto;
 }
