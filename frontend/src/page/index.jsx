@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Row, Col} from "react-bootstrap";
 import axios from "axios";
+import io from 'socket.io-client';// Included client side socket io
 import "./css/MainPage.css";
 import "./css/LHS.css";
 import "./css/RHS.css";
@@ -15,8 +16,25 @@ const MainPage = () => {
     const [basePath, setBasePath] = useState("");
     const [updatedPath, setUpdatedPath] = useState("");
     const [selected, setSelected] = useState("");
+    const [selectedDirectory, setSelectedDirectory] = useState(null);
     useEffect(()=>{
+        const socket = io('http://localhost:4040');
 
+        // Event listener for 'selectedDirectory' event(when home directory is selected)
+        socket.on('selectedDirectory', ({ selectedDirectory }) => {
+          console.log('Received selected directory:', selectedDirectory);
+          setSelectedDirectory(selectedDirectory);
+        });
+    
+        // Bleow is Event listener for 'directoryChange' event
+        socket.on('directoryChange', ({ event, path }) => {
+          console.log('Directory change event:', event, path);
+          // Vishal add any code to be executed on directory change here
+        });
+    
+        return () => {
+          socket.disconnect();
+        };
     },[])
 
     const getLocalFileData = async (path, type = null) => {

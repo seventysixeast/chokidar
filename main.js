@@ -1,4 +1,3 @@
-// my-electron-app/main.js
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const express = require('express');
 const chokidar = require("chokidar");
@@ -6,17 +5,17 @@ const path = require('path');
 const fs = require('fs');
 
 const http = require("http");
-
+const socketIO = require('socket.io');
 const bodyParser = require('body-parser');
 const cors = require("cors");
 
 let mainWindow;
-let selectedDirectory = null; // Variable to store the selected directory
+let  selectedDirectory = process.cwd(); // Variable to store the selected directory
 
 
 const backendApp = express();
-
 const httpServer = http.createServer(backendApp);
+const io = socketIO(httpServer);
 
 const backendPort = 4040;
 
@@ -37,6 +36,7 @@ backendApp.get('/api/selectedDirectory', (req, res) => {
 backendApp.post("/get-location", async (req, res) => {
   console.log(req.body)
   console.log(req.file)
+  req.body.url='F:\\New folder';
   let obj = {}
   let i = 0
   let splitfilepath = []
@@ -137,7 +137,8 @@ function openDirectoryDialog() {
     // check if the user selected a directory
     if (!result.canceled && result.filePaths.length > 0) {
       selectedDirectory = result.filePaths[0];
-      console.log('selectedDirectory',selectedDirectory)
+      console.log('selectedDirectory',selectedDirectory);
+      io.emit('selectedDirectory', { selectedDirectory });
     }
   }).catch(err => {
     console.error(err);
@@ -147,8 +148,13 @@ function openDirectoryDialog() {
 app.whenReady().then(() => {
   httpServer.listen(backendPort, () => {
     console.log(`Backend server listening on http://localhost:${backendPort}`);
-    chokidar.watch('./fruits').on('all', (event, path) => {
+    /*chokidar.watch('./fruits').on('all', (event, path) => {
       console.log(event, path);
+    });*/
+    chokidar.watch(selectedDirectory).on('all', (event, path) => {
+      console.log(event, path);
+      // Emit the directory change event to the frontend using Socket.io
+      io.emit('directoryChange', { event, path });
     });
   });
 
@@ -161,4 +167,18 @@ app.on('window-all-closed', function () {
 
 app.on('activate', function () {
   if (mainWindow === null) createWindow();
+});
+
+// Socket.io event listeners (you can add more as needed)
+io.on('connection', (socket) => {
+  console.log('Client connected');
+
+  // Send the selected directory to the newly connected client
+  if (selectedDirectory) {
+    socket.emit('selectedDirectory', { selectedDirectory });
+  }
+
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  });
 });
