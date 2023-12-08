@@ -1,6 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const Breadcrumb = ({bread = [], sendLocation, setViewerOn}) => {
+const Breadcrumb = ({bread = [], sendLocation, setViewerOn, basePath}) => {
+
+
+    const [curmb, setCurmb] = useState([])
+
+    useEffect(() =>{
+        let create = [];
+        create = basePath.split("\\");
+        create.pop();
+        setCurmb(create);
+    },[basePath])
 
     const findUrl = async (i) => {
         let create = bread.slice(0, i+1).join("\\");
@@ -12,14 +22,21 @@ const Breadcrumb = ({bread = [], sendLocation, setViewerOn}) => {
         <div className="container-box">
             {
                 bread.map((d, index) => {
-                    if(index == 0){
-                        return <span key={"bread-"+index}>{d}</span>
-                    } else {
-                        return <> 
-                        <span 
-                        key={"bread-"+index} 
-                        onClick={()=>findUrl(index)} 
-                        className={`bStyle ${bread.length-1 === index? "bPointer":"" }`}> &#62; {d}</span></>
+
+                    console.log(curmb[index])
+                    console.log(d)
+                    console.log(curmb[index] !== d)
+
+                    if(curmb[index] !== d){
+                        if(index == 0){
+                            return <span key={"bread-"+index}>{d}</span>
+                        } else {
+                            return <> 
+                            <span 
+                            key={"bread-"+index} 
+                            onClick={()=>findUrl(index)} 
+                            className={`bStyle ${bread.length-1 === index? "bPointer":"" }`}> &#62; {d}</span></>
+                        }
                     }
                 })
             }

@@ -5,7 +5,7 @@ import { FaLeaf, FaRegFileLines } from "react-icons/fa6";
 import { Fa500Px, FaRegMoon, FaFolder, FaFolderOpen } from "react-icons/fa";
 import FileViewer from "./component/FileViewer";
 const RHS = ({
-    path,
+    basePath,
     data = [],
     sendLocation,
     updatedPath,
@@ -110,6 +110,7 @@ const RHS = ({
                 }
             
             <Breadcrumb 
+                basePath={basePath}
                 bread={dPath} 
                 sendLocation={sendLocation} 
                 setViewerOn={setViewerOn}

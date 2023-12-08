@@ -16,7 +16,7 @@ const MainPage = () => {
     const [basePath, setBasePath] = useState("");
     const [updatedPath, setUpdatedPath] = useState("");
     const [selected, setSelected] = useState("");
-    const [updateViaS, setUpdateViaS] = useState(false);
+    const [updateViaS, setUpdateViaS] = useState("");
     const [ViewerIsOn, setViewerOn] = useState(false);
     const [selectedDirectory, setSelectedDirectory] = useState(null);
 
@@ -33,27 +33,26 @@ const MainPage = () => {
 
         // // Bleow is Event listener for 'directoryChange' event
         socket.on('directoryChange', ({ event, path }) => {
-            console.log('Directory change event:', event, path);    
-            setUpdateViaS(true)
+            console.log('Directory change event:', event, path);
+            setUpdateViaS(path || ""); // Ensure path is not null or empty
             
             // getLocalFileData(selectedDirectory, "oneTime")
             // Vishal add any code to be executed on directory change here
         });
-        setUpdateViaS(false)
         return () => {
         socket.disconnect();
         };
     },[])
 
-    useEffect(()=> {
+    useEffect(() => {
         console.log('basePath:', basePath);
         console.log('basePath:', updatedPath);
         console.log('updateViaS:', updateViaS);
-        if(basePath && updateViaS){
+        if (basePath && updateViaS) {
             getLocalFileData(updatedPath);
-            setUpdateViaS(false)
+            setUpdateViaS("");
         }
-    },[updateViaS])
+    }, [basePath, updatedPath, updateViaS]);
 
     // ============================
 

@@ -14,6 +14,12 @@ const LHS = ({
 
     const [mainFolderNmae, setFolderName] = useState("");
 
+    useEffect(()=>{
+        let a = path.split("\\")
+            a = a[a.length-1]
+            setFolderName(a)
+    },[path])
+
     const changeDirectory = (name) => {
         setSelected(name)
         sendLocation(path+`\\`+name)
