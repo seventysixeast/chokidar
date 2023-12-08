@@ -1,21 +1,39 @@
 import React, {useEffect, useState} from "react";
-import DocViewer from "react-doc-viewer";
+import axios from "axios";
 const FileViewer = ({location}) => {
 
-    const [lct, setLct] = useState([{uri: ""}])
-    console.log(location);
-
+    const [lct, setLct] = useState("")
+    
     useEffect(()=>{
-        let a = location.split("\\")
-        a = a.join("/");
-        console.log(a);
-        // setLct([{uri: require(a)}])
+        loadFile()
     },[location])
 
+    const loadFile = async () => {
+        let res = await axios.post(
+            "http://localhost:4040/read-file",
+            {url: location}
+        );
+
+        if(res.data.success){
+            // res.data.fileInfo 
+            let a = res.data.content;
+            console.log(a)
+            setLct(a);
+
+        }
+        
+
+    }
+
     return(
-        <>
-           {/* <DocViewer documents={[{uri: require("E:/RProject/axxonlab/dist/win-unpacked/LICENSE.electron.txt")}]} /> */}
-        </>
+        <div style={{
+            border: "solid 1px #cbcbcb",
+            padding: "10px"
+        }}>
+
+            <pre>{lct}</pre>
+
+        </div>
     )
 
 }

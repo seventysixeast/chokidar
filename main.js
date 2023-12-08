@@ -31,7 +31,6 @@ backendApp.get('/api/data', (req, res) => {
 
 backendApp.post("/get-location", async (req, res) => {
   console.log(req.body)
-  console.log(req.file)
   let obj = {}
   let i = 0
   let splitfilepath = []
@@ -74,6 +73,27 @@ backendApp.post("/get-location", async (req, res) => {
 
   return
   
+})
+
+backendApp.post("/read-file", async (req, res) => {
+  await fs.readFile(req.body.url, (err, data)=>{
+    if(err){
+      res.send({
+        success: false,
+        msg: "data not found",
+      });
+    } else {
+      res.send({
+        success: true,
+        fileInfo: data,
+        content: data.toString(),
+        msg: "data found",
+      });
+    }
+  })
+
+  return
+
 })
 
 // ============================================================

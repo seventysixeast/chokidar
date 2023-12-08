@@ -75,7 +75,7 @@ white-space: nowrap;
 }
 
 
-@media all and (max-width: 1000px) {
+/* @media all and (max-width: 1000px) {
 .breadcrumb {
 height: 35px;
 }
@@ -87,8 +87,8 @@ font-size: 11px;
 padding: 0 30px;
 }
 }
-
-@media all and (max-width: 710px) {
+ */
+/* @media all and (max-width: 710px) {
 .breadcrumb {
 height: 30px;
 }
@@ -96,4 +96,4 @@ height: 30px;
 padding: 0 20px;
 }
 
-}
+} */
