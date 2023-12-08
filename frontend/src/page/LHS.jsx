@@ -14,9 +14,9 @@ const LHS = ({
         <div className="sidebar-container">
             <div className="logo">
                 <button className="btn custom-btn1">
-                    <Fa500Px />
+                    {/* <Fa500Px /> */}M
                 </button>
-                <span className="logo-name">Chokidar</span>
+                <span className="logo-name">Monitor Folder</span>
                 <button 
                     className="btn theme-switch-button"
                     onClick={()=> {

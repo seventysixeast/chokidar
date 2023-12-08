@@ -7,55 +7,117 @@ const RHS = ({
     data = [],
     sendLocation
 }) => {
+
+    const [dPath, setDPath] = useState([])
+    const [fileName, setFileName] = useState("");
+
+    useEffect(()=>{
+        setDPath(updatedPath.split("\\"))
+    },[updatedPath])
+
+    const showFolderAndFile = () => {
+        return data.map((d, index)=> {
+            if(d.type == "file"){
+                let a = d.name.split(".")
+                console.log("aaa", a);
+                console.log(a[a.length-1])
+                if(a[a.length-1] == "txt"){
+                    return ( 
+                        <div 
+                            key={"RHS"+index} 
+                            className="file-box"
+                            onClick={()=>{
+                                setViewerOn(true)
+                                setFileName(d.name)
+                            }}
+                        > 
+                            <span className="file-icon"><FaRegFileLines /></span>
+                            <span className="file-name">{d.name}</span>
+                        </div>
+                    )   
+                }
+            } else {
+                return (
+                    <div 
+                        key={"RHS"+index} 
+                        className="file-box"
+                        onClick={()=>{
+                            sendLocation(updatedPath+"\\"+d.name)
+                        }}
+                    >
+                        <span>
+                            <span className="file-icon"><FaFolder /></span> 
+                            <span className="file-name">({d.count})</span>
+                        </span>
+                        <span className="file-name">{d.name}</span>
+                    </div>
+                )
+            }
+        })
+    }
+
+    const simplefromate = () => {
+        return data.map((d, index)=> {
+            if(d.type == "file"){
+                let a = d.name.split(".")
+                console.log("aaa", a);
+                console.log(a[a.length-1])
+                if(a[a.length-1] == "txt"){
+                    return ( 
+                        <div 
+                            key={"RHS"+index} 
+                            className="file-box-simple"
+                            onClick={()=>{
+                                setViewerOn(true)
+                                setFileName(d.name)
+                            }}
+                        > 
+                            {/* <span className="file-icon-simple"><FaRegFileLines /></span> */}
+                            <span className="file-name"> {d.name}</span>
+                        </div>
+                    )   
+                }
+            } else {
+                return (
+                    <div 
+                        key={"RHS"+index} 
+                        className="file-box-simple"
+                        onClick={()=>{
+                            sendLocation(updatedPath+"\\"+d.name)
+                        }}
+                    >
+                        {/* <span className="file-icon-simple"><FaFolder /> </span>  */}
+                        <span className="file-name">{d.name}</span>
+                        <span className="file-name"> ({d.count})</span>
+                        
+                        
+                    </div>
+                )
+            }
+        })
+    }
+
     return(
         <div className="main-container">
-            <h1>File Name</h1>
-            <Breadcrumb>
-                <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
-                <Breadcrumb.Item href="https://getbootstrap.com/docs/4.0/components/breadcrumb/">
-                    Library
-                </Breadcrumb.Item>
-                <Breadcrumb.Item active>Data</Breadcrumb.Item>
-            </Breadcrumb>
-            <div className="file-body">
+            
+                {
+                    // dPath.length?<h1>{dPath[dPath.length-1]}</h1>:""
+                }
+            
+            <Breadcrumb 
+                bread={dPath} 
+                sendLocation={sendLocation} 
+                setViewerOn={setViewerOn}
+            />
+            <div className={`file-body ${ViewerIsOn?"file-c":""}`}>
 
                 {
-                    data.map(d=> {
-                        if(d.type == "file"){
-                            return <div style={{
-                                textAlign: "center",
-                                margin:"0 12px",
-                                width: "60px",
-                                wordBreak: "break-word"
-                            }}> <span style={{
-                                fontSize: "40px",
-                                color: "#72d400",
-                            }}><FaRegFileLines /></span>
-                            <br />
-                            <span style={{
-                                fontSize: "14px",
-                                fontWeight: "600"
-                            }}>{d.name}</span>
-                        </div>
-                        } else {
-                            return <div style={{
-                                textAlign: "center",
-                                margin:"0 12px",
-                                width: "60px",
-                                wordBreak: "break-word"
-                            }}> <span style={{
-                                fontSize: "40px",
-                                color: "#72d400",
-                            }}><FaFolder /></span> 
-                            ({d.count})
-                            <br />
-                            <span style={{
-                                fontSize: "14px",
-                                fontWeight: "600"
-                            }}>{d.name}</span>
-                        </div>
-                        }
-                    })
+                    ViewerIsOn?
+                        <>
+                            <FileViewer location={updatedPath+"\\"+fileName} />
+                        </>
+                    :
+                    simplefromate()
                 }
 
 
