@@ -29,6 +29,49 @@ FolderMonitor is a desktop application that allows users to monitor directories,
 - The application will emit real-time events to indicate directory changes.
 
 
-## License
+## Technology Stack
 
-This project is licensed under the [MIT License](LICENSE).
+- Electron version: ^28.0.0
+- **Backend:**
+  - Node.js(>=18.5.0)
+  - Express
+  - Socket.io
+  - Chokidar
+
+- **Frontend:**
+  - React (v18.2.0)
+  - Bootstrap
+  - Socket.io-client
+  - Axios
+
+## Installation
+
+### Prerequisites
+
+- Node.js (https://nodejs.org/)
+- npm (Node Package Manager, comes with Node.js installation)
+
+### Steps
+
+1. **Clone the Repository:**
+    git clone from repository
+    cd folder-monitor
+
+2. **Install Dependencies:**
+
+  **Install backend and frontend dependencies.**
+    Goto project root directory then run following commands on by one:
+    npm install
+    cd frontend
+    npm install
+    npm run build
+
+3. **Run the Application:**
+    Start the Electron application using command below.
+    npm start
+    This will launch the Electron app. Select a directory to monitor, and you're good to go!
+
+4. **Building the App (Production Build)**
+    Use below commands to create a production build of the Electron app:
+    npm run dist
+    Find the installer in the dist directory.

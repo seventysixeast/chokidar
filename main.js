@@ -35,8 +35,6 @@ backendApp.get('/api/selectedDirectory', (req, res) => {
 // ============================================================
 
 backendApp.post("/get-location", async (req, res) => {
-  console.log(req.body)
-  console.log(req.file)
   selectedDirectory.url = req.body.url;
   // req.body.url='F:\\New folder';
   let obj = {}
@@ -162,14 +160,11 @@ function openDirectoryDialog() {
     if (!result.canceled && result.filePaths.length > 0) {
       selectedDirectory.url = result.filePaths[0];
 
-      console.log(result.filePaths[0])
-
       chokidar.watch(result.filePaths[0]).on('all', (event, path) => {
         // console.log(path)
         // Emit the directory change event to the frontend using Socket.io
         io.emit('directoryChange', { event, path });
       });
-      console.log('selectedDirectory',selectedDirectory.url);
 
       io.emit('selectedDirectory', { selectedDirectory: selectedDirectory.url });
     } else {
@@ -187,14 +182,6 @@ function openDirectoryDialog() {
 app.whenReady().then(() => {
   httpServer.listen(backendPort, () => {
     console.log(`Backend server listening on http://localhost:${backendPort}`);
-    /*chokidar.watch('./fruits').on('all', (event, path) => {
-      console.log(event, path);
-    });*/
-    // chokidar.watch(selectedDirectory.url).on('all', (event, path) => {
-    //   console.log(path)
-    //   // Emit the directory change event to the frontend using Socket.io
-    //   io.emit('directoryChange', { event, path });
-    // });
   });
 
   createWindow();
