@@ -18,7 +18,7 @@ const LHS = ({
         let a = path.split("\\")
             a = a[a.length-1]
             setFolderName(a)
-    },[path])
+    },[path, data])
 
     const changeDirectory = (name) => {
         setSelected(name)
@@ -33,17 +33,6 @@ const LHS = ({
                     {/* <Fa500Px /> */}M
                 </button>
                 <span className="logo-name">Monitor Folder</span>
-                {/* <button 
-                    className="btn theme-switch-button"
-                    onClick={()=> {
-                        sendLocation("E:\\RProject", "oneTime");
-                        let a = "E:\\RProject".split("\\")
-                        a = a[a.length-1]
-                        setFolderName(a)
-                    }}
-                >
-                    <SiWpexplorer />
-                </button> */}
             </div>
             {
                 Object.keys(data).length ?

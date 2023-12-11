@@ -23,9 +23,7 @@ const Breadcrumb = ({bread = [], sendLocation, setViewerOn, basePath}) => {
             {
                 bread.map((d, index) => {
 
-                    console.log(curmb[index])
-                    console.log(d)
-                    console.log(curmb[index] !== d)
+                    let a = d.split(".");
 
                     if(curmb[index] !== d){
                         if(index == 0){
@@ -34,8 +32,16 @@ const Breadcrumb = ({bread = [], sendLocation, setViewerOn, basePath}) => {
                             return <> 
                             <span 
                             key={"bread-"+index} 
-                            onClick={()=>findUrl(index)} 
-                            className={`bStyle ${bread.length-1 === index? "bPointer":"" }`}> &#62; {d}</span></>
+                            onClick={()=>{
+                                if(a[a.length-1] !== "txt"){
+                                    findUrl(index)
+                                }
+                            }} 
+                            className={`bStyle ${
+                                bread.length-1 === index ? 
+                                "bPointer":
+                                ""
+                            }`}> &#62; {d}</span></>
                         }
                     }
                 })

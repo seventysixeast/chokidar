@@ -17,9 +17,18 @@
     cursor: pointer;
 }
 
+.file-only {
+    margin: 0px 0px;
+    padding: 7px 18px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #cdcdcd;
+    border-bottom: 1px solid #ebebeb;
+}
+
 .file-box-simple:hover {
     background-color: #5277fb;
-    color: #ebebeb
+    color: #ebebeb;
 }
 
 .file-box {

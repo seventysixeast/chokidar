@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from "react";
-// import {Breadcrumb} from "react-bootstrap";
 import Breadcrumb from "./component/breadCrumb";
-import { FaLeaf, FaRegFileLines } from "react-icons/fa6";
-import { Fa500Px, FaRegMoon, FaFolder, FaFolderOpen } from "react-icons/fa";
 import FileViewer from "./component/FileViewer";
 const RHS = ({
     basePath,
@@ -17,71 +14,36 @@ const RHS = ({
     const [fileName, setFileName] = useState("");
 
     useEffect(()=>{
-        setDPath(updatedPath.split("\\"))
-    },[updatedPath])
-
-    const showFolderAndFile = () => {
-        return data.map((d, index)=> {
-            if(d.type == "file"){
-                let a = d.name.split(".")
-                console.log("aaa", a);
-                console.log(a[a.length-1])
-                if(a[a.length-1] == "txt"){
-                    return ( 
-                        <div 
-                            key={"RHS"+index} 
-                            className="file-box"
-                            onClick={()=>{
-                                setViewerOn(true)
-                                setFileName(d.name)
-                            }}
-                        > 
-                            <span className="file-icon"><FaRegFileLines /></span>
-                            <span className="file-name">{d.name}</span>
-                        </div>
-                    )   
-                }
-            } else {
-                return (
-                    <div 
-                        key={"RHS"+index} 
-                        className="file-box"
-                        onClick={()=>{
-                            sendLocation(updatedPath+"\\"+d.name)
-                        }}
-                    >
-                        <span>
-                            <span className="file-icon"><FaFolder /></span> 
-                            <span className="file-name">({d.count})</span>
-                        </span>
-                        <span className="file-name">{d.name}</span>
-                    </div>
-                )
-            }
-        })
-    }
+        if(ViewerIsOn){
+            let a = updatedPath.split("\\")
+            a.push(fileName)
+            setDPath(a)
+        } else {
+            setDPath(updatedPath.split("\\"))
+        }
+        
+    },[updatedPath, ViewerIsOn])
 
     const simplefromate = () => {
         return data.map((d, index)=> {
             if(d.type == "file"){
-                let a = d.name.split(".")
-                console.log("aaa", a);
-                console.log(a[a.length-1])
-                if(a[a.length-1] == "txt"){
-                    return ( 
-                        <div 
-                            key={"RHS"+index} 
-                            className="file-box-simple"
-                            onClick={()=>{
+                let a = d.name.split(".");
+                return ( 
+                    <div 
+                        key={"RHS"+index} 
+                        className={ a[a.length-1] == "txt"?"file-box-simple":"file-only"}
+                        onClick={()=>{
+                            if(a[a.length-1] == "txt"){
                                 setViewerOn(true)
-                                setFileName(d.name)
-                            }}
-                        > 
-                            {/* <span className="file-icon-simple"><FaRegFileLines /></span> */}
-                            <span className="file-name"> {d.name}</span>
-                        </div>
-                    )   
-                }
+                                setFileName(d.name) 
+                            }
+                            
+                        }}
+                    > 
+                        {/* <span className="file-icon-simple"><FaRegFileLines /></span> */}
+                        <span className="file-name"> {d.name}</span>
+                    </div>
+                )   
             } else {
                 return (
                     <div 
@@ -94,8 +56,6 @@ const RHS = ({
                         {/* <span className="file-icon-simple"><FaFolder /> </span>  */}
                         <span className="file-name">{d.name}</span>
                         <span className="file-name"> ({d.count})</span>
-                        
-                        
                     </div>
                 )
             }
@@ -104,10 +64,6 @@ const RHS = ({
 
     return(
         <div className="main-container">
-            
-                {
-                    // dPath.length?<h1>{dPath[dPath.length-1]}</h1>:""
-                }
             
             <Breadcrumb 
                 basePath={basePath}

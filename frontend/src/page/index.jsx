@@ -45,12 +45,10 @@ const MainPage = () => {
     },[])
 
     useEffect(() => {
-        console.log('basePath:', basePath);
-        console.log('basePath:', updatedPath);
-        console.log('updateViaS:', updateViaS);
         if (basePath && updateViaS) {
             getLocalFileData(updatedPath);
             setUpdateViaS("");
+            routeFileOnly();
         }
     }, [basePath, updatedPath, updateViaS]);
 
@@ -59,9 +57,6 @@ const MainPage = () => {
 
     const getLocalFileData = async (path, type = null) => {
 
-        console.log("=======", path)
-        console.log("=======", type)
-
         let res = await axios.post(
             "http://localhost:4040/get-location",
             {
@@ -69,7 +64,6 @@ const MainPage = () => {
                 type: type
             }
         );
-        console.log("-------------------------", res)
         if(res.data.success){
             if(type == "oneTime"){
                 setBasePath(path)
@@ -80,6 +74,19 @@ const MainPage = () => {
                 setKeepUpdating(res.data.directoryInfo)
                 setUpdatedPath(path)
             }
+        }
+    }
+    const routeFileOnly = async () => {
+
+        let res = await axios.post(
+            "http://localhost:4040/get-location",
+            {
+                url: basePath,
+                type: null
+            }
+        );
+        if(res.data.success){
+            setData(res.data.directoryInfo);
         }
     }
 
