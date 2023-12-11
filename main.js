@@ -56,10 +56,21 @@ backendApp.post("/get-location", async (req, res) => {
 
         if (stats.isDirectory()) {
           const subdirectoryFiles = fs.readdirSync(filePath);
+
+          console.log("========= directoryInfo subdirectoryFiles", subdirectoryFiles);
+
+          let a = [];
+          let findtxt = subdirectoryFiles.filter((e)=>{ 
+            a = e.split(".")
+            if(a[a.length-1] === "txt"){
+              return e
+            } 
+          })
+
           directoryInfo.push({
             name: file,
             type: 'directory',
-            count: subdirectoryFiles.length,
+            count: findtxt.length,
           });
         } else {
           directoryInfo.push({

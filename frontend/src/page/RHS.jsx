@@ -28,22 +28,24 @@ const RHS = ({
         return data.map((d, index)=> {
             if(d.type == "file"){
                 let a = d.name.split(".");
-                return ( 
-                    <div 
-                        key={"RHS"+index} 
-                        className={ a[a.length-1] == "txt"?"file-box-simple":"file-only"}
-                        onClick={()=>{
-                            if(a[a.length-1] == "txt"){
-                                setViewerOn(true)
-                                setFileName(d.name) 
-                            }
-                            
-                        }}
-                    > 
-                        {/* <span className="file-icon-simple"><FaRegFileLines /></span> */}
-                        <span className="file-name"> {d.name}</span>
-                    </div>
-                )   
+                if(a[a.length-1] == "txt"){
+                    return ( 
+                        <div 
+                            key={"RHS"+index} 
+                            className={ a[a.length-1] == "txt"?"file-box-simple":"file-only"}
+                            onClick={()=>{
+                                if(a[a.length-1] == "txt"){
+                                    setViewerOn(true)
+                                    setFileName(d.name) 
+                                }
+                                
+                            }}
+                        > 
+                            {/* <span className="file-icon-simple"><FaRegFileLines /></span> */}
+                            <span className="file-name"> {d.name}</span>
+                        </div>
+                    )
+                }
             } else {
                 return (
                     <div 
