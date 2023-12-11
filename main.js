@@ -3,6 +3,7 @@ const express = require('express');
 const chokidar = require("chokidar");
 const path = require('path');
 const fs = require('fs');
+const { execPath } = process;
 
 const http = require("http");
 const socketIO = require('socket.io');
@@ -10,9 +11,8 @@ const bodyParser = require('body-parser');
 const cors = require("cors");
 global.selectedDirectory = {};
 let mainWindow;
-// let  selectedDirectory = process.cwd(); // Variable to store the selected directory
-selectedDirectory = {uri: 'E:\\v'} // Variable to store the selected directory
-
+let initialPath = process.cwd();
+selectedDirectory = {url: initialPath}; // Variable to store the selected directory
 
 const backendApp = express();
 const httpServer = http.createServer(backendApp);
@@ -142,7 +142,7 @@ backendApp.get('/api/directory', (req, res) => {
 function createWindow() {
   mainWindow = new BrowserWindow({ width: 800, height: 600 });
   mainWindow.loadFile(path.join(__dirname, 'frontend', 'build', 'index.html'));
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
   mainWindow.on('closed', function () {
     mainWindow = null;
   });
@@ -151,10 +151,11 @@ function createWindow() {
 }
 
 function openDirectoryDialog() {
+  const defaultPath = path.dirname(execPath);
   dialog.showOpenDialog(mainWindow, {
     properties: ['openDirectory'],
     title: 'Select Directory',
-    defaultPath: app.getPath('documents'), //default starting directory
+    defaultPath: defaultPath, //default starting directory
     buttonLabel: 'Select', //button label
   }).then(result => {
     // check if the user selected a directory
@@ -171,6 +172,12 @@ function openDirectoryDialog() {
       console.log('selectedDirectory',selectedDirectory.url);
 
       io.emit('selectedDirectory', { selectedDirectory: selectedDirectory.url });
+    } else {
+      chokidar.watch(selectedDirectory.url).on('all', (event, path) => {
+        // console.log(path)
+        // Emit the directory change event to the frontend using Socket.io
+        io.emit('directoryChange', { event, path });
+      });
     }
   }).catch(err => {
     console.error(err);

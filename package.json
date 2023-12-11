@@ -14,9 +14,9 @@
     "directories": {
       "output": "dist"
     },
-    "asar": false,
     "win": {
-      "target": "nsis"
+      "target": "nsis",
+      "icon": "icons/icon.ico"
     }
   },
   "keywords": [],
