@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog, Menu } = require('electron');
 const express = require('express');
 const chokidar = require("chokidar");
 const path = require('path');
@@ -23,10 +23,6 @@ const backendPort = 4040;
 backendApp.use(cors());
 backendApp.use(bodyParser.json())
 backendApp.use("/static", express.static("./static/"));
-
-backendApp.get('/api/data', (req, res) => {
-  res.json({ message: 'Hello from backend!' });
-});
 
 backendApp.get('/api/selectedDirectory', (req, res) => {
   res.json({ selectedDirectory: selectedDirectory.url });
@@ -150,10 +146,66 @@ function createWindow() {
   mainWindow = new BrowserWindow({ width: 800, height: 600 });
   mainWindow.loadFile(path.join(__dirname, 'frontend', 'build', 'index.html'));
   //mainWindow.webContents.openDevTools();
+  const menuTemplate = [
+    {
+      label: 'File',
+      submenu: [
+        { role: 'quit' }
+      ],
+    },
+    {
+      label: 'Edit',
+      submenu: [
+        { role: 'undo' },
+        { role: 'redo' },
+        { type: 'separator' },
+        { role: 'cut' },
+        { role: 'copy' },
+        { role: 'paste' },
+        { type: 'separator' },
+        { role: 'selectall' },
+      ],
+    },
+    {
+      label: 'View',
+      submenu: [
+        { role: 'togglefullscreen' },
+        { role: 'resetzoom' },
+        { role: 'zoomin' },
+        { role: 'zoomout' },
+        { type: 'separator' },
+        { role: 'toggledevtools' },
+      ],
+    },
+    {
+      label: 'Window',
+      submenu: [
+        { role: 'minimize' },
+        { role: 'zoom' },
+        { role: 'close' },
+      ],
+    },
+    {
+      label: 'Help',
+      submenu: [
+        {
+          label: 'Learn More',
+          click: async () => {
+            const { shell } = require('electron');
+            await shell.openExternal('https://electronjs.org');
+          },
+        },
+        { type: 'separator' },
+        { role: 'about' },
+      ],
+    },
+  ];
+  const menu = Menu.buildFromTemplate(menuTemplate);
+  Menu.setApplicationMenu(menu);
+
   mainWindow.on('closed', function () {
     mainWindow = null;
   });
-
   openDirectoryDialog();
 }
 

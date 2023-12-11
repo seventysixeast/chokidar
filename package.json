@@ -16,7 +16,8 @@
     },
     "win": {
       "target": "nsis",
-      "icon": "icons/icon.ico"
+      "icon": "icons/icon.ico",
+	  "publisherName": "FolderMonitorApp"
     }
   },
   "keywords": [],
