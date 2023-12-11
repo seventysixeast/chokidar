@@ -31,7 +31,7 @@ FolderMonitor is a desktop application that allows users to monitor directories,
 
 ## Technology Stack
 
-- Electron version: ^28.0.0
+- Electron version: ^=28.0.0
 - **Backend:**
   - Node.js(>=18.5.0)
   - Express
