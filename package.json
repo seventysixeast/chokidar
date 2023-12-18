@@ -14,6 +14,10 @@
     "directories": {
       "output": "dist"
     },
+    "mac": {
+      "target": "dmg",
+      "icon": "icons/icon.icns"
+    },
     "win": {
       "target": "nsis",
       "icon": "icons/icon.ico",

@@ -37,6 +37,12 @@ backendApp.post("/get-location", async (req, res) => {
   let i = 0
   let splitfilepath = []  
 
+  if(process.platform === "darwin"){
+    let a = [];
+    a = (req.body.url).split("\\");
+    req.body.url = a.join("/")
+  }
+
   await fs.readdir(req.body.url , (err, files) => {
       if (err) {
         console.error('Error reading directory:', err);
